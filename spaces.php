@@ -334,6 +334,26 @@ class SpacesConnect {
        }
     }
 
+    /**
+     * Copies an object to a destination and deletes the source object.
+     * @return result of the CopyObject method
+    */
+    function Move($sourceKey, $destinationKey) {
+      try {
+        $result = $this->client->CopyObject($this->space, $sourceKey, $this->space, $destinationKey);
+
+        $this->client->waitUntil('ObjectExists', array(
+          'Bucket' => $this->space,
+          'Key'    => $destinationKey
+        ));
+        $this->DeleteObject($sourceKey);
+        return $this->ObjReturn($result->toArray());
+      }
+      catch (\Exception $e) {
+        $this->HandleAWSException($e);
+      }
+    }
+    
 
 
 
