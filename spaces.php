@@ -340,7 +340,11 @@ class SpacesConnect {
     */
     function Move($sourceKey, $destinationKey) {
       try {
-        $result = $this->client->CopyObject($this->space, $sourceKey, $this->space, $destinationKey);
+        $result = $this->client->copyObject([
+          'Bucket'     => $this->space,
+          'Key'        => $destinationKey,
+          'CopySource' => $this->space.'/'.$sourceKey,
+        ]);
 
         $this->client->waitUntil('ObjectExists', array(
           'Bucket' => $this->space,
