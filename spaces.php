@@ -275,8 +275,7 @@ class SpacesConnect {
               'Bucket'      => $this->space,
               'Key'         => $save_as,
               'Body'        => $file,
-              'ACL'         => $access,
-              'ContentType' => $mime_type
+              'ACL'         => $access
           ));
 
           $this->client->waitUntil('ObjectExists', array(
