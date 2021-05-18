@@ -270,6 +270,7 @@ class SpacesConnect {
         }else{
           $file = fopen($pathToFile, 'r+');
         }
+        var_dump($file);
         try {
           $result = $this->client->putObject(array(
               'Bucket'      => $this->space,
