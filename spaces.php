@@ -202,6 +202,13 @@ class Space {
     return $this->ObjReturn($result->toArray());
   }
 
+  /*
+    Checks whether an object exists.
+  */
+  function DoesObjectExist($objectName) {
+    return $this->ObjReturn($this->s3->doesObjectExist($this->name, $objectName));
+  }
+
 
   /*
   Downloads a file.
