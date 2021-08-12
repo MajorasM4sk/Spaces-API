@@ -159,6 +159,28 @@ class Space {
 
 
   /*
+  Uploads text into a file.
+  */
+  function UploadText($text, $access = "private", $save_as = "", $mime_type = "application/octet-stream") {
+    if(empty($saveAs)) { $saveAs = $filePath; }
+    
+    $result = $this->s3->putObject(array(
+      'Bucket'      => $this->name,
+      'Key'         => $save_as,
+      'Body'        => $text,
+      'ACL'         => $access,
+      'ContentType' => $mime_type
+    ));
+
+    $this->s3->waitUntil('ObjectExists', array(
+        'Bucket' => $this->name,
+        'Key'    => $save_as
+    ));
+
+    return SpacesResult($result);
+  }
+
+    /*
   Uploads a file.
   */
   function UploadFile($pathToFile, $access = "private", $save_as = "", $mime_type = "application/octet-stream") {
