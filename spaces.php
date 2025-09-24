@@ -183,7 +183,7 @@ class Space {
     /*
   Uploads a file.
   */
-  function UploadFile($pathToFile, $access = "private", $save_as = "", $mime_type = "application/octet-stream") {
+  function UploadFile($pathToFile, $access = "private", $save_as = "", $mime_type = "application/octet-stream", $content_disposition = '') {
     if(empty($saveAs)) { $saveAs = $filePath; }
 
     $content = fopen($pathToFile, "r");
@@ -193,7 +193,8 @@ class Space {
       'Key'         => $save_as,
       'Body'        => $content,
       'ACL'         => $access,
-      'ContentType' => $mime_type
+      'ContentType' => $mime_type,
+      'ContentDisposition' => $content_disposition
     ));
 
     $this->s3->waitUntil('ObjectExists', array(
